@@ -4,6 +4,5 @@ from store.models import Product, OrderItem
 
 
 def say_hello(request):
-    queryset = Product.objects.only('id', 'title')
-    queryset = Product.objects.defer('description')
+    queryset = Product.objects.select_related('collection').all()
     return render(request, 'hello.html', {'name': 'Andrew', 'products': list(queryset)})
