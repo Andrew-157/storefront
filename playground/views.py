@@ -4,5 +4,5 @@ from store.models import Product
 
 
 def say_hello(request):
-    queryset = Product.objects.filter(inventory=F('unit_price'))
+    queryset = Product.objects.order_by('unit_price', '-title')
     return render(request, 'hello.html', {'name': 'Andrew', 'products': list(queryset)})
