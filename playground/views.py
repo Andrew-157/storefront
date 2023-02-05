@@ -4,16 +4,7 @@ from store.models import Order, OrderItem, Product, Customer, Collection
 
 
 def say_hello(request):
-
-    with transaction.atomic():
-        order = Order()
-        order.customer_id = 1
-        order.save()
-
-        item = OrderItem()
-        item.order = order
-        item.product_id = 1
-        item.quantity = 1
-        item.unit_price = 10
-        item.save()
-    return render(request, 'hello.html', {'name': 'Andrew'})
+    # this queryset is different from the previous
+    # it doesn't have a lot of methods like filter, annotate etc.
+    queryset = Product.objects.raw('SELECT * FROM store_product')
+    return render(request, 'hello.html', {'name': 'Andrew', 'result': list(queryset)})
