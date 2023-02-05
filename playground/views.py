@@ -4,5 +4,8 @@ from store.models import Product
 
 
 def say_hello(request):
-    queryset = Product.objects.order_by('unit_price', '-title').reverse()
+    # Sorts products by unit_price in ASC order and returns first object
+    queryset = Product.objects.earliest('unit_price')
+    # Sorts products by unit_price in DESC order and returns first object
+    queryset = Product.objects.latest('unit_price')
     return render(request, 'hello.html', {'name': 'Andrew', 'products': list(queryset)})
