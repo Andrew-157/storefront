@@ -4,5 +4,5 @@ from store.models import Product, OrderItem
 
 
 def say_hello(request):
-    queryset = Product.objects.select_related('collection').all()
+    queryset = Product.objects.prefetch_related('promotions').all()
     return render(request, 'hello.html', {'name': 'Andrew', 'products': list(queryset)})
