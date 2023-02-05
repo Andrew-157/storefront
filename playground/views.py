@@ -1,9 +1,10 @@
 from django.shortcuts import render
+from django.db.models import Q
 from store.models import Product
 
 
 def say_hello(request):
-    # inventory < 10 AND unit price < 20
+    # inventory < 10 OR unit price < 20
     queryset = Product.objects.filter(
-        inventory__lt=10).filter(unit_price__lt=20)
+        Q(inventory__lt=10) | ~Q(unit_price__lt=20))
     return render(request, 'hello.html', {'name': 'Andrew', 'products': list(queryset)})
